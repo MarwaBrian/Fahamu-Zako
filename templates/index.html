@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         html, body {
             height: 100%;
@@ -41,7 +42,7 @@
             align-items: center;
             padding: 40px 20px;
             color: #333; /* Text color for readability */
-            background-image: url('C:/Users/Salome/Desktop/Fahamu Haki Zako/static/Background.jpeg'); /* Use relative path */
+            background-image: url("{{ url_for('static', filename='Background.jpeg') }}"); /* Use relative path */
             background-size: cover; /* Cover the section */
             background-position: center; /* Center the background */
         }
@@ -121,7 +122,7 @@
 <body>
 
 <header class="header-bg text-white text-center p-4">
-    <h1>🎉 Explore Human Rights Instruments 🎉</h1>
+    <h1>🎉 FAHAMU HAKI ZAKO 🎉</h1>
     <nav>
         <a href="#" class="text-white mx-3">Home</a>
         <a href="#about" class="text-white mx-3">About</a>
@@ -144,7 +145,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">🌍 African Charter on Human and Peoples' Rights</h5>
                     <p class="card-text">A charter that outlines the rights and freedoms of African peoples.</p>
-                    <a href="ACPH.pdf" class="btn btn-success" target="_blank">Select</a>
+                    <a href="{{ url_for('static', filename='ACPH.pdf') }}" class="btn btn-success" target="_blank">Select</a>
                     <button class="btn btn-brown" data-toggle="modal" data-target="#findTutorModal">Find Tutor</button>
                 </div>
             </div>
@@ -154,7 +155,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">🏛️ Kampala Convention</h5>
                     <p class="card-text">A convention focused on the protection and assistance of internally displaced persons in Africa.</p>
-                    <a href="Kampala_Convention.pdf" class="btn btn-success" target="_blank">Select</a>
+                    <a href="{{ url_for('static', filename='Kampala_Convention.pdf') }}" class="btn btn-success" target="_blank">Select</a>
                     <button class="btn btn-brown" data-toggle="modal" data-target="#findTutorModal">Find Tutor</button>
                 </div>
             </div>
@@ -179,31 +180,42 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="findTutorModalLabel">Choose Your Tutor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button  type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    
+                
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-center">
                 <div class="row">
-                    <div class="col-md-4">
-                        <button class="btn btn-link" onclick="selectTutor('Podcast Tutor')">
-                            <i class="fas fa-podcast fa-3x"></i>
-                            <p>Podcast Tutor</p>
-                        </button>
+                    <div class="modal-body text-center">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button id="summaryButton" class="btn btn-link" onclick="selectTutor('text')">
+                                    <i class="fas fa-book-open fa-3x"></i>
+                                    <p>Summary Tutor</p>
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-link" onclick="selectTutor('visual')">
+                                    <i class="fas fa-chalkboard-teacher fa-3x"></i>
+                                    <p>Visual Teacher</p>
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-link" onclick="selectTutor('audio')">
+                                    <i class="fas fa-podcast fa-3x"></i>
+                                    <p>Podcast Tutor</p>
+                                </button>
+                            </div>
+                            
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-link" onclick="selectTutor('Summary Tutor')">
-                            <i class="fas fa-book-open fa-3x"></i>
-                            <p>Summary Tutor</p>
-                        </button>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-link" onclick="selectTutor('Visual Teacher')">
-                            <i class="fas fa-chalkboard-teacher fa-3x"></i>
-                            <p>Visual Teacher</p>
-                        </button>
-                    </div>
+                    
+                    
+                    
                 </div>
+                <div id="summaryResult" style="margin-top: 20px;"></div> <!-- Summary result display -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
@@ -283,6 +295,8 @@
     <button class="back-to-top" onclick="scrollToTop()">↑</button>
 </div>
 
+
+    
 <!-- Footer -->
 <footer class="footer">
     <p>&copy; 2024 Explore Human Rights Instruments. All rights reserved.</p>
@@ -290,9 +304,9 @@
 
 <!-- jQuery, Popper.js, and Bootstrap JS -->
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 
 
 <script>
@@ -324,12 +338,35 @@ document.getElementById('saveDocument').addEventListener('click', function() {
     }
 });
 
-    function selectTutor(tutorType) {
-        // Add your logic here for when a tutor is selected
-        alert('You have selected: ' + tutorType);
-        // You can also close the modal after selection
-        $('#findTutorModal').modal('hide');
+$(document).ready(function() {
+    // Global variable to store selected delivery method
+    let selectedMethod = '';
+
+    // Function to set the selected tutor (delivery method)
+    window.selectTutor = function(method) {
+        selectedMethod = method; // Store selected delivery method
+        summarize(); // Call the summarize function
+    };
+
+    // Function to summarize the PDF
+    function summarize() {
+        if (selectedMethod) {
+            $.ajax({
+                url: '/summarize',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ delivery_method: selectedMethod }),
+                success: function(data) {
+                    $('#summaryResult').text(data.summary || data.error);
+                },
+                error: function(jqXHR) {
+                    $('#summaryResult').text("Error: " + (jqXHR.responseJSON ? jqXHR.responseJSON.error : "Unknown error"));
+                }
+            });
+        }
     }
+});
+
 
 </script>
 </body>
