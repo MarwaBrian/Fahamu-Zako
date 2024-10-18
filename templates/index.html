@@ -218,8 +218,18 @@
                 <div id="summaryResult" style="margin-top: 20px;"></div> <!-- Summary result display -->
             </div>
             <div class="modal-footer">
+                <label for="languageSelect">Translate to: </label>
+                <select id="languageSelect" class="form-control" style="display: inline-block; width: auto;">
+                    <option value="swahili">Swahili</option>
+                    <option value="french">French</option>
+                    <option value="spanish">Spanish</option>
+                    <!-- Add more languages here -->
+                </select>
+                <button type="button" class="btn btn-primary" onclick="translateContent()">Translate</button>
                 <button type="button" class="btn btn-red" data-dismiss="modal">Close</button>
             </div>
+            
+            
         </div>
     </div>
 </div>
