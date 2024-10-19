@@ -6,117 +6,61 @@
     <title>Explore Human Rights Instruments</title>
     <!-- Bootstrap CSS -->
      <!-- Include Bootstrap Icons or Font Awesome -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         html, body {
             height: 100%;
-            font-family: 'Comic Neue', cursive;
-            scroll-behavior: smooth; /* Smooth scroll behavior */
-        }
-        body {
-            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f5f5f5; /* Light background color for contrast */
         }
         .header-bg {
             background: linear-gradient(to right, #4CAF50, #81C784);
+            padding: 20px; /* Increased padding */
         }
         .section {
-            height: auto; /* Adjusting height for better content fit */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            color: #333; /* Text color for readability */
-            background-size: cover; /* Cover the section */
-            background-position: center; /* Center the background */
-        }
-        .sectioncontact {
-            height: auto; /* Adjusting height for better content fit */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            color: #333; /* Text color for readability */
-            background-image: url("{{ url_for('static', filename='Background.jpeg') }}"); /* Use relative path */
-            background-size: cover; /* Cover the section */
-            background-position: center; /* Center the background */
-        }
-        .section h2 {
-            margin-bottom: 20px; /* Space below section headings */
-        }
-        .footer {
-            background: #333;
-            color: white;
-            padding: 10px 0; /* Small padding for a smaller footer */
-            text-align: center;
-        }
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: none; /* Initially hidden */
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        .back-to-top.show {
-            display: flex; /* Show when needed */
-        }
-        
-        .input-group {
-            border-radius: 25px; /* Rounded input group */
-            overflow: hidden; /* To prevent border-radius overflow */
-        }
-        .input-group input {
-            border-radius: 25px 0 0 25px; /* Rounded left side of input */
-        }
-        .input-group .btn {
-            border-radius: 0 25px 25px 0; /* Rounded right side of button */
+            padding: 60px 20px;
+            color: #333;
         }
         .card {
-            border-radius: 15px; /* Rounded corners for cards */
-            transition: transform 0.3s; /* Smooth transform for hover effect */
+            border-radius: 15px;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
         }
         .card:hover {
-            transform: scale(1.05); /* Slight zoom on hover */
-        }
-        .contact-form {
-            max-width: 600px; /* Limiting width of the contact form */
-            background: white; /* White background for contrast */
-            padding: 20px;
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+            transform: translateY(-5px); /* Lift effect on hover */
         }
         .btn-brown {
-        background-color: #8B4513; /* Brown color */
-        color: white; /* Text color */
+            background-color: #8B4513; /* Brown color */
+            color: white;
         }
-
         .btn-brown:hover {
-        background-color: #7B3F00; /* Darker brown on hover */
+            background-color: #7B3F00; /* Darker brown on hover */
         }
-        .btn-red {
-        background-color: red; /* Brown color */
-        color: white; /* Text color */
+        .modal-header {
+            background-color: #4CAF50; /* Header background for modals */
+            color: white;
         }
-
-        .btn-red:hover {
-        background-color: #7B3F00; /* Darker brown on hover */
+        .modal-footer {
+            display: flex;
+            justify-content: space-between; /* Space buttons evenly */
         }
-        
-
+        .contact-form {
+            background: white; /* White background for contrast */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+        }
+        #summaryResult {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
@@ -130,7 +74,8 @@
         <a href="#contact" class="text-white mx-3">Contact</a>
     </nav>
 </header>
-<br><br>
+<br>
+
 <div class="content container my-4">
     <div class="input-group mb-4">
         <input type="text" class="form-control" placeholder="Search for documents...">
@@ -138,6 +83,8 @@
             <button class="btn btn-outline-success" type="button">🔍 Search</button>
         </div>
     </div>
+    <button class="btn btn-info" data-toggle="modal" data-target="#chatbotModal">Chat with AI</button>
+    <br><br>
 
     <div class="row" id="documentCards">
         <div class="col-md-4">
@@ -147,6 +94,7 @@
                     <p class="card-text">A charter that outlines the rights and freedoms of African peoples.</p>
                     <a href="{{ url_for('static', filename='ACPH.pdf') }}" class="btn btn-success" target="_blank">Select</a>
                     <button class="btn btn-brown" data-toggle="modal" data-target="#findTutorModal">Find Tutor</button>
+                    
                 </div>
             </div>
         </div>
@@ -157,6 +105,7 @@
                     <p class="card-text">A convention focused on the protection and assistance of internally displaced persons in Africa.</p>
                     <a href="{{ url_for('static', filename='Kampala_Convention.pdf') }}" class="btn btn-success" target="_blank">Select</a>
                     <button class="btn btn-brown" data-toggle="modal" data-target="#findTutorModal">Find Tutor</button>
+                    
                 </div>
             </div>
         </div>
@@ -167,12 +116,39 @@
                     <p class="card-text">Information about the various institutions of the African Union.</p>
                     <a href="https://au.int/en/specialised-agencies-institutions" class="btn btn-success" target="_blank">Select</a>
                     <button class="btn btn-brown" data-toggle="modal" data-target="#findTutorModal">Find Tutor</button>
+                    
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Modal for Find Tutor -->
+    <!-- Chatbot Modal -->
+<div class="modal fade" id="chatbotModal" tabindex="-1" role="dialog" aria-labelledby="chatbotModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chatbotModalLabel">Chat with AI Assistant</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Chatbot interface goes here -->
+                <div id="chatbotInterface">
+                    <!-- This is where you can implement the chatbot interface -->
+                    <p>How can I assist you today?</p>
+                    <!-- Example of a simple input for chatbot conversation -->
+                    <input type="text" id="chatInput" placeholder="Type your message" class="form-control">
+                    <button class="btn btn-primary mt-2" id="sendChat">Send</button>
+                    <div id="chatResponse" class="mt-3">
+                        <!-- Responses from the chatbot will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
    
 <!-- Find Tutor Modal -->
 <div class="modal fade" id="findTutorModal" tabindex="-1" role="dialog" aria-labelledby="findTutorModalLabel" aria-hidden="true">
@@ -197,7 +173,7 @@
                                 </button>
                             </div>
                             <div class="col-md-4">
-                                <button class="btn btn-link" onclick="selectTutor('visual')">
+                                <button class="btn btn-link" onclick="selectTutor('video')">
                                     <i class="fas fa-chalkboard-teacher fa-3x"></i>
                                     <p>Visual Teacher</p>
                                 </button>
@@ -217,6 +193,7 @@
                 </div>
                 <div id="summaryResult" style="margin-top: 20px;"></div> <!-- Summary result display -->
             </div>
+            
             <div class="modal-footer">
                 <label for="languageSelect">Translate to: </label>
                 <select id="languageSelect" class="form-control" style="display: inline-block; width: auto;">
@@ -315,7 +292,8 @@
 <!-- jQuery, Popper.js, and Bootstrap JS -->
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 
@@ -347,35 +325,90 @@ document.getElementById('saveDocument').addEventListener('click', function() {
         alert('Please fill in both fields.');
     }
 });
+$(document).ready(function() {
+        $('#sendChat').click(function() {
+            const userMessage = $('#chatInput').val();
+
+            // Clear the input field
+            $('#chatInput').val('');
+
+            // Display the user's message in the chatResponse div
+            $('#chatResponse').append(`<p><strong>You:</strong> ${userMessage}</p>`);
+
+            // Make an AJAX POST request to your Flask backend to get the chatbot's response
+            $.ajax({
+                type: 'POST',
+                url: '/chat',  // Ensure this endpoint is defined in your Flask app
+                contentType: 'application/json',
+                data: JSON.stringify({ message: userMessage }),
+                success: function(response) {
+                    // Append the chatbot's response to the chatResponse div
+                    $('#chatResponse').append(`<p><strong>Bot:</strong> ${response.reply}</p>`);
+                },
+                error: function() {
+                    // Handle any errors
+                    $('#chatResponse').append(`<p><strong>Bot:</strong> Sorry, something went wrong.</p>`);
+                }
+            });
+        });
+    });
 
 $(document).ready(function() {
-    // Global variable to store selected delivery method
+    // Global variable to store selected delivery method and language
     let selectedMethod = '';
+    let selectedLanguage = 'en'; // Default to English
 
-    // Function to set the selected tutor (delivery method)
+    // Function to set the selected delivery method
     window.selectTutor = function(method) {
         selectedMethod = method; // Store selected delivery method
         summarize(); // Call the summarize function
     };
 
-    // Function to summarize the PDF
+    // Function to set the selected language
+    $('#languageSelect').change(function() {
+        selectedLanguage = $(this).val(); // Update the selected language
+    });
+
     function summarize() {
-        if (selectedMethod) {
-            $.ajax({
-                url: '/summarize',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ delivery_method: selectedMethod }),
-                success: function(data) {
-                    $('#summaryResult').text(data.summary || data.error);
-                },
-                error: function(jqXHR) {
-                    $('#summaryResult').text("Error: " + (jqXHR.responseJSON ? jqXHR.responseJSON.error : "Unknown error"));
-                }
-            });
-        }
+    if (selectedMethod) {
+        $.ajax({
+            url: '/summarize',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ 
+                delivery_method: selectedMethod,
+                language: selectedLanguage // Include the selected language in the request
+            }),
+            success: function(data) {
+                console.log(data); // Debugging to see the returned data
+                
+                if (selectedMethod === "video" && data.video_url) {
+                    $('#summaryResult').html(`
+                        <video controls width="400">
+                            <source src="${data.video_url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    `);
+                } else if (selectedMethod === "audio") {
+                    $('#summaryResult').html(`
+                        <audio controls>
+                            <source src="/audio/summary_audio.mp3" type="audio/mp3">
+                            Your browser does not support the audio tag.
+                        </audio>
+                    `);
+                } else {
+        $('#summaryResult').html(data.summary || data.error); // Inject HTML directly
     }
-});
+            },
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                $('#summaryResult').text("An error occurred while processing your request.");
+            }
+        });
+    }
+}
+})
+
 
 
 </script>
