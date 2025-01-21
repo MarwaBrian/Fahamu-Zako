@@ -5,6 +5,8 @@ import PyPDF2
 import pyttsx3  # For text-to-speech functionality
 # Example import for video generation (use any video generation library or API)
 import moviepy.editor as mp  # For generating a basic video using text-to-speech
+from flask_login import current_user, login_required, logout_user, login_user
+
 os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
 
 # Initialize Flask app
@@ -182,6 +184,11 @@ def chat():
         return jsonify({"reply": bot_reply}), 200
 
     return jsonify({"reply": "I'm sorry, I couldn't process that. Could you rephrase?"}), 500
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
 
 
 if __name__ == '__main__':
