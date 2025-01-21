@@ -6,7 +6,9 @@ import pyttsx3  # For text-to-speech functionality
 # Example import for video generation (use any video generation library or API)
 import moviepy.editor as mp  # For generating a basic video using text-to-speech
 from flask_login import current_user, login_required, logout_user, login_user
-
+from app import db, bcrypt
+from app.models import User
+from app.forms import RegistrationForm, LoginForm
 os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
 
 # Initialize Flask app
@@ -185,10 +187,25 @@ def chat():
 
     return jsonify({"reply": "I'm sorry, I couldn't process that. Could you rephrase?"}), 500
 
-
+url_for = ...
+redirect = ...
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
+        return render_template('index.html')
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        try:
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+            db.session.add(user)
+            db.session.commit()
+            flash('Your account has been created successfully! You are now able to log in.', 'success')
+            return redirect(url_for('auth.login'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'An error occurred. {str(e)} Please try again.', 'danger')
+    return render_template('register.html', title='Register', form=form)
 
 
 if __name__ == '__main__':
