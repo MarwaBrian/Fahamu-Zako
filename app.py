@@ -1,5 +1,5 @@
 from together import Together
-from flask import Flask, render_template, jsonify, request, send_file, send_from_directory
+from flask import Flask, render_template, jsonify, request, send_file, send_from_directory, flash, redirect, url_for, request
 import os
 import PyPDF2
 import pyttsx3  # For text-to-speech functionality
@@ -7,8 +7,8 @@ import pyttsx3  # For text-to-speech functionality
 import moviepy.editor as mp  # For generating a basic video using text-to-speech
 from flask_login import current_user, login_required, logout_user, login_user
 from app import db, bcrypt
-from app.models import User
-from app.forms import RegistrationForm, LoginForm
+from models import User
+from forms import RegistrationForm, LoginForm
 os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
 
 # Initialize Flask app
@@ -206,6 +206,8 @@ def register():
             db.session.rollback()
             flash(f'An error occurred. {str(e)} Please try again.', 'danger')
     return render_template('register.html', title='Register', form=form)
+
+
 
 
 if __name__ == '__main__':

@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, request, jsonify, flash, request
 from flask_login import current_user, login_required, logout_user, login_user
 from app import db, bcrypt
-from app.models import User
-from app.forms import RegistrationForm, LoginForm
+from models import User
+from forms import RegistrationForm, LoginForm
 from flask_wtf import FlaskForm
 
 auth = Blueprint('auth', __name__)
