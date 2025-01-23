@@ -6,16 +6,20 @@ import pyttsx3  # For text-to-speech functionality
 # Example import for video generation (use any video generation library or API)
 import moviepy.editor as mp  # For generating a basic video using text-to-speech
 from flask_login import current_user, login_required, logout_user, login_user
-from app import db, bcrypt
+# from app import db, bcrypt
+from flask_sqlalchemy import SQLAlchemy
 from models import User
 from forms import RegistrationForm, LoginForm
 os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
 
 # Initialize Flask app
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./instance/site.db'
 # Define paths
 VIDEO_DIRECTORY = r"C:\Users\Salome\Desktop\Fahamu Haki Zako"
 AUDIO_DIRECTORY = r"C:\Users\Salome\Desktop\Fahamu Haki Zako"
+
+db = SQLAlchemy(app)
 
 @app.route('/video/<filename>')
 def serve_video(filename):
