@@ -5,8 +5,8 @@ import PyPDF2
 import pyttsx3  # For text-to-speech functionality
 # Example import for video generation (use any video generation library or API)
 import moviepy.editor as mp  # For generating a basic video using text-to-speech
-from flask_login import current_user, login_required, logout_user, login_user
-# from app import db, bcrypt
+from flask_login import current_user, login_required, logout_user, login_user, LoginManager, UserMixin
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from models import User
 from forms import RegistrationForm, LoginForm
@@ -15,11 +15,32 @@ os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./instance/site.db'
+app.config['SECRET_KEY'] = 'd74999cbb56a7040fd3fd6e1bb558896a38931f19f18baf6'
+
+""" 
+SECRET_KEY=d74999cbb56a7040fd3fd6e1bb558896a38931f19f18baf6
+"""
+
+# ...existing code...
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 # Define paths
 VIDEO_DIRECTORY = r"C:\Users\Salome\Desktop\Fahamu Haki Zako"
 AUDIO_DIRECTORY = r"C:\Users\Salome\Desktop\Fahamu Haki Zako"
 
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+
+# Define a User class
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User(user_id)
 
 @app.route('/video/<filename>')
 def serve_video(filename):
@@ -124,7 +145,8 @@ def format_summary_for_html(summary):
 
 @app.route('/summarize', methods=['POST'])
 def summarize_pdf():
-    pdf_file_path = r'C:\Users\Salome\Desktop\Fahamu Haki Zako\static\Kampala_Convention.pdf'
+    # pdf_file_path = r'C:\Users\Salome\Desktop\Fahamu Haki Zako\static\Kampala_Convention.pdf'
+    pdf_file_path = r'./static/Kampala_Convention.pdf'
     print("Checking for PDF file...")
 
     if os.path.exists(pdf_file_path):
@@ -165,6 +187,8 @@ def summarize_pdf():
             return jsonify({"error": "No summary generated."}), 500
     else:
         return jsonify({"error": "PDF file not found."}), 404
+    
+
 @app.route('/chat', methods=['POST'])
 def chat():
     # Get the user's message from the request
@@ -193,6 +217,8 @@ def chat():
 
 url_for = ...
 redirect = ...
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
