@@ -1,43 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
-    <title>Sign Up to RedX</title>
-</head>
+{% block title %}Register{% endblock %}
 
-<body>
-    <div class='login-outer-container'>
-        <div class='login-container'>
-            <div class='login-area'>
-                <h3>REGISTER TO REDX</h3>
-                <form class='login-items'>
-                    <label htmlFor="name">Name</label>
-                    <input type="text" class='login' name="name" placeholder='Your name' required />
-                    <label htmlFor="email">Email</label>
-                    <input type="email" class='login' name="email" placeholder="your-email@gmail.com" required />
-                    <label htmlFor="password">Password</label>
-                    <input type="password" class='login' name="password" id="" placeholder='Enter password' required />
-                    <input type="submit" class='login-btn' value="Register" />
-                </form>
-                <p class='p'>Already have an account?
-                    <a class='a' href="index.html">Please Login</a>
-                </p>
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    .password-container {
+        position: relative;
+    }
+    .password-container input {
+        width: 100%;
+        padding-right: 40px; /* Space for eye icon */
+    }
+    .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #555;
+    }
+</style>
+{% endblock %}
 
-                <div class='social-login-container'>
-                    <p class='prompt'>or</p>
-                    <div class='social-login'>
-                        <button class='google-signin'><i class="fa-brands fa-google"></i> Login with Google</button>
-                        <button class='github-signin'><i class="fa-brands fa-github"></i>Login with Github</button>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Register</h4>
+                <form method="POST" action="{{ url_for('register') }}">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {{ form.username(class="form-control") }}
+                        {% for error in form.username.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
                     </div>
-                </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control") }}
+                        {% for error in form.email.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3 password-container">
+                        {{ form.password.label(class="form-label") }}
+                        {{ form.password(class="form-control", id="password") }}
+                        <button type="button" class="toggle-password" data-target="password">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        {% for error in form.password.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-3 password-container">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {{ form.confirm_password(class="form-control", id="confirm_password") }}
+                        <button type="button" class="toggle-password" data-target="confirm_password">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        {% for error in form.confirm_password.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                </form>
             </div>
         </div>
     </div>
-</body>
+</div>
+{% endblock %}
 
-</html>
+{% block scripts %}
+<script>
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    });
+</script>
+{% endblock %}
