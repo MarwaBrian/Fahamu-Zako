@@ -13,7 +13,8 @@ from models import User, db  # Import User and db from models.py
 os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/site.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance\site.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/User/Videos/wakatime/fahamu/fahamu-zako/instance/site.sqlite'
 app.config['SECRET_KEY'] = 'd74999cbb56a7040fd3fd6e1bb558896a38931f19f18baf6'
 
 # Initialize db and bcrypt
@@ -131,17 +132,45 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         try:
-            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+            # Create the user object without the password
+            user = User(username=form.username.data, email=form.email.data)
+
+            # Use the set_password method to hash and set the password
+            user.set_password(form.password.data)
+
+            # Add the new user to the database and commit the transaction
             db.session.add(user)
             db.session.commit()
+
+            # Log in the user right after registration
             login_user(user)
             return redirect(url_for('index'))
+
         except Exception as e:
             db.session.rollback()
             flash(f'Error: {str(e)}', 'danger')
 
     return render_template('register.html', title='Register', form=form)
+
+# @app.route('/register', methods=['GET', 'POST'])
+# def register():
+#     if current_user.is_authenticated:
+#         return redirect(url_for('index'))
+    
+#     form = RegistrationForm()
+#     if form.validate_on_submit():
+#         try:
+#             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+#             user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+#             db.session.add(user)
+#             db.session.commit()
+#             login_user(user)
+#             return redirect(url_for('index'))
+#         except Exception as e:
+#             db.session.rollback()
+#             flash(f'Error: {str(e)}', 'danger')
+
+#     return render_template('register.html', title='Register', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

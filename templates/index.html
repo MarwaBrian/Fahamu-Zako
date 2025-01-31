@@ -73,7 +73,7 @@
     </nav>
     <div class="mt-3">
         {% if current_user.is_authenticated %}
-            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+            <a href="{{ url_for('my_account') }}" class="btn btn-primary">Go to Dashboard</a>
         {% else %}
             <a href="{{ url_for('login') }}" class="btn btn-light">Login</a>
             <a href="{{ url_for('register') }}" class="btn btn-warning">Register</a>
