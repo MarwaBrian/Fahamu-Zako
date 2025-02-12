@@ -13,8 +13,9 @@ from models import User, db  # Import User and db from models.py
 os.environ["IMAGEMAGICK_BINARY"] = r"C:\Program Files\ImageMagick-7.1.1-Q16-HDRI\magick.exe"
 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance\site.sqlite'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/User/Videos/wakatime/fahamu/fahamu-zako/instance/site.sqlite'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/site.sqlite'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:/Users/User/Videos/wakatime/fahamu/fahamu-zako/instance/site.sqlite'
+# app.config['SECRET_KEY'] = 'd74999cbb56a7040fd3fd6e1bb558896a38931f19f18baf6' # Change this to a random string
 app.config['SECRET_KEY'] = 'placeholder' # Change this to a random string
 
 # Initialize db and bcrypt
@@ -25,6 +26,7 @@ bcrypt = Bcrypt(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# client = Together(api_key="e3ab4476326269947afb85e9c0b0ed5fe9ae2949e27ed3a38ee4913d8f807b3e") # Change this to your API key
 client = Together(api_key="anotherPlaceholder") # Change this to your API key
 
 VIDEO_DIRECTORY = r"C:\Users\Salome\Desktop\Fahamu Haki Zako"
