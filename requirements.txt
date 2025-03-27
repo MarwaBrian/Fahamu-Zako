@@ -154,7 +154,6 @@ PyJWT==2.9.0
 pyparsing==3.2.1
 pypdf==4.3.1
 PyPDF2==3.0.1
-pypiwin32==223
 python-dateutil==2.9.0.post0
 pyttsx3==2.98
 pytz==2024.2
