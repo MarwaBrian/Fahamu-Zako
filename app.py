@@ -32,8 +32,10 @@ app.register_blueprint(approutes_bp)
 app.register_blueprint(chat_bp, url_prefix="/chat")  # Register the blueprint
 
 
-print(app.url_map)
+# print(app.url_map)
 
+import nltk
+nltk.download('all')  # Or specific corpora like 'punkt', 'wordnet', etc.
 
 
 if __name__ == '__main__':
