@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Rights Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+/* General Styling */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FAF3E0; /* Soft Warm Beige */
+    color: #333333; /* Deep Gray */
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.container h2 {
+    color: white;
+}
+
+.container p {
+    color: white;
+}
+
+
+/* Header */
+header {
+    background: #1f5b09; /* Soft Teal */
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    color: #FAF3E0; /* Soft Beige */
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #FAF3E0;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #F77F00; /* Warm Sunset Orange */
+}
+
+/* Hero Section & Carousel */
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.overlay {
+    background: rgba(18, 123, 20, 0.85); /* Soft Teal with Transparency */
+    padding: 20px;
+    border-radius: 10px;
+    color: #FAF3E0;
+    margin-top: 180px;
+}
+
+/* Navigation Buttons */
+button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    color: #F77F00;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 90px;
+}
+
+button.prev:hover, button.next:hover {
+    background: #FB8500;
+    color: #FAF3E0;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 10px;
+}
+
+/* Sections */
+.section {
+    padding: 80px 0;
+    background: #E9F5DB; /* Light Pastel Green */
+}
+
+.section h2 {
+    color: #F77F00; /* Sunset Orange */
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #FFB703; /* Bright Amber */
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #FB8500; /* Energetic Tangerine */
+    color: white;
+}
+/* Resources Section */
+#resources {
+    background-color: #FAF3E0; /* Soft Cream for a bright and warm feel */
+    padding: 80px 0;
+    text-align: center;
+}
+
+/* Modal Background */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    margin: 15% auto; 
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Close Button */
+.close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.section.light {
+    background-color: #f4f4f4;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.team-member {
+    width: 250px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.team-member img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.team-member h3 {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.team-member p {
+    color: #666;
+}
+
+
+
+#aboutvideo {
+    background-color: #E9F5DB; /* Soft Cream for a bright and warm feel */
+    padding: 80px 0;
+    text-align: center;
+}
+
+.about-video {
+    width: 100%; /* Adjust width for responsiveness */
+    max-width: 1500px; /* Limits maximum size */
+    border-radius: 10px; /* Adds rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+    transition: transform 0.3s ease-in-out;
+}
+
+.about-video:hover {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-video {
+        width: 95%; /* Slightly larger on smaller screens */
+    }
+}
+
+
+/* Footer */
+footer {
+    background: #1f5b09; /* Soft Teal */
+    padding: 20px 0;
+    text-align: center;
+    color: #FAF3E0;
+}
+
+.translate-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            
+            <h1>Human Rights Awareness</h1>
+            <div id="google_translate_element" class="translate-box"> Translate</div> 
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#mission">Mission</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#team">Meet Our Team</a></li>
+                    <li><a href="{{ url_for('login.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('signup.signup') }}">Signup</a></li>
+                    <li><a href="{{ url_for('approutes.legalSupport') }}">Learn</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+
+    </header>
+    
+    
+    
+    <section class="hero">
+        <div class="carousel">
+            <div class="carousel-slide active" src="static/images/legalImage3.jpg" style="background-image: url('static/images/legalImage3.jpg');">
+                <div class="overlay">
+                    <h2>Empowering Individuals</h2>
+                    <p>Providing access to human rights resources for advocacy and education.</p>
+                </div>
+            </div>
+            <div class="carousel-slide" src="static/images/legalImage4.jpg" style="background-image: url('static/images/legalImage4.jpg');">
+                <div class="overlay">
+                    <h2>Know Your Rights</h2>
+                    <p>Stay informed about your rights and how to protect them.</p>
+                </div>
+            </div>
+            <div class="carousel-slide" src="static/images/legalImage5.jpg" style="background-image: url('static/images/legalImage5.jpg');">
+                <div class="overlay">
+                    <h2>Join the Movement</h2>
+                    <p>Be a voice for change in your community.</p>
+                </div>
+            </div>
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>
+    </section>
+    
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About</h2>
+            <p style="color: black;" >This platform is dedicated to promoting human rights by providing open access to essential documents, educational materials, and advocacy resources, all powered by cutting-edge technology. Developed by a skilled team of IT professionals led by Salome Monthe Chemiat, this initiative integrates digital solutions to enhance accessibility, engagement, and impact. Through AI-driven research tools, secure data repositories, and interactive learning modules, we empower individuals and organizations to drive meaningful change, raise awareness, and protect fundamental freedoms. Whether you're an activist, educator, or policymaker, our platform equips you with the technological resources and knowledge needed to create a more just and equitable society.</p>
+        </div>
+    </section>
+    
+    <section  style="background-image: url('static/images/legalImage4.jpg');" id="mission" class="section dark">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <p >We strive to raise awareness about human rights issues and empower individuals through knowledge.</p>
+        </div>
+    </section>
+
+    <!-- Meet Our Team Section -->
+    <section id="team" class="section light">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <p style="color: black;">Our dedicated team works tirelessly to come up with the best technology that can <br> educate and advocate for human rights.</p>
+
+            <div class="team-container">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/teamimages/team1.jpeg') }}"alt="Team Member 1">
+                    <h3>Salome Monthe Chemiat</h3>
+                    <p> <Strong>Lead Developer & Project Architect</Strong></p>
+                    <p> 
+                        Salome spearheaded the design and development of our web-based system. 
+                        <br>She also implemented AI capabilities using the Llama model .</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/teamimages/team3.jpg') }}" alt="Dominic Mule">
+                    <h3>Dominic Mule</h3>
+                    <p> <strong> Software & AI Engineer </strong></p>
+                    <p>Dominic's expertise in AI and software engineering has been instrumental in building and optimizing our intelligent web-based system.</p>
+                </div>
+                
+
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/teamimages/team2.jpeg') }}" alt="Beryl Apondi">
+                    <h3>Beryl Apondi</h3>
+                    <p> <Strong>Founder & CEO, Thinking BIH </Strong></p>
+                    <p>Beryl's leadership and data-driven approach have played a crucial role in building a strong foundation for our initiative.</p>
+                </div>
+                
+            
+                
+
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/teamimages/team5.jpg') }}" alt="Team Member 3">
+                    <h3>Victor Njogu</h3>
+                    <p> <strong>UI/UX Designer & Logistics Coordinator</strong></p>
+                    <p> 
+                        Victor played a key role in crafting the user experience, designing intuitive UI elements, and integrating engaging visuals like videos. 
+                        <br>He also managed team logistics, ensuring smooth collaboration and project execution."</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/teamimages/team6.jpg') }}" alt="Victoria Rotich">
+                    <h3>Victoria Rotich</h3>
+                    <p> <strong> Development & Strategy Lead </strong></p>
+                    <p>With a passion for technology and innovation, Victoria has been instrumental in structuring our company’s foundation. 
+                        <br> From setting up our company profile to shaping our strategic direction, her dedication has helped lay the groundwork for our success.</p>
+                </div>
+
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/teamimages/team4.jpg') }}" alt="Brian Chacha">
+                    <h3>Brian Chacha</h3>
+                    <p> <strong>Data Scientist | Machine Learning Engineer </strong></p>
+                    <p>"Brian's expertise in AI and data science has been instrumental in enhancing our system's intelligence and performance."</p>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <section id="resources" class="section">
+        <div class="container">
+            <h2>Resources</h2>
+            <p style="color: black;">Find essential guides, articles, and legal documents to support human rights advocacy.
+                Explore a curated collection of reports, policy briefs, and educational materials designed to empower individuals and organizations in promoting justice, equality, and human rights. Our resources include best practices, case studies, and up-to-date legal frameworks to help you stay informed and take meaningful action. Whether you're a researcher, activist, or policymaker, you'll find valuable insights to drive impactful change..</p>
+            <!-- Browse Resources Button -->
+            <a href="#" class="btn" id="browseResourcesBtn">Browse Resources</a>
+
+            <!-- Modal Structure -->
+        <div id="resourcesModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Legal Documents</h2>
+                <p>Here are some important legal documents you can read:</p>
+                
+                <ul>
+                    <li>
+                        <strong>ACPH (African Charter on Human and People's Rights)</strong>
+                        <br>
+                        <a href="/static/legal_documents/ACPH.pdf" target="_blank">Open ACPH (PDF)</a>
+                    </li>
+                    <li>
+                        <strong>Kampala Convention (African Union Convention on IDPs)</strong>
+                        <br>
+                        <a href="/static/legal_documents/Kampala_Convention.pdf" target="_blank">Open Kampala Convention (PDF)</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        </div>
+    </section>
+    
+    <section id="aboutvideo" class="section">
+        <div class="container">
+            <video class="about-video" controls poster="{{ url_for('static', filename='images/legalImage5.jpg') }}">
+                <source src="{{ url_for('static', filename='images/aboutvideo.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <section  style="background-image: url('static/images/legalImage4.jpg');" id="contact" class="section dark">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <p>Have questions? Want to get involved? Reach out to us.</p>
+            <a href="mailto:fahamuhakizako@gmail.com" class="btn">Email Us</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Human Rights Awareness. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+//Allows a smooth movement within the page
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("a[href^='#']").forEach(anchor => {
+        anchor.addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            const targetId = this.getAttribute("href"); 
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                const headerOffset = 80; // Adjust this value based on your header height
+                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+});
+
+//Open Resource Modal 
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("resourcesModal");
+    const openBtn = document.getElementById("browseResourcesBtn");
+    const closeBtn = document.querySelector(".close");
+
+    // Open Modal
+    openBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        modal.style.display = "block";
+    });
+
+    // Close Modal
+    closeBtn.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    // Close Modal on Clicking Outside
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});
+
+
+//Works on the couressel
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+            slide.classList.add('active');
+        }
+    });
+}
+
+function moveSlide(direction) {
+    currentSlide += direction;
+    if (currentSlide < 0) {
+        currentSlide = totalSlides - 1;
+    } else if (currentSlide >= totalSlides) {
+        currentSlide = 0;
+    }
+    showSlide(currentSlide);
+}
+
+document.querySelector('.prev').addEventListener('click', () => moveSlide(-1));
+document.querySelector('.next').addEventListener('click', () => moveSlide(1));
+
+// Auto slide
+setInterval(() => moveSlide(1), 5000);
+
+// Initialize first slide
+showSlide(currentSlide);
+
+//transalate 
+
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+</body>
+</html>

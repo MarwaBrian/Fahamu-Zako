@@ -1,0 +1,75 @@
+body {
+    background: linear-gradient(135deg, #FAF3E0, #E9F5DB);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background: #FFF3E0;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h1 {
+    color: #1f5b09;
+    font-size: 24px;
+}
+
+.input-field {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #1f5b09;
+    border-radius: 5px;
+    background: #E9F5DB;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background: #FFB703;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background: #F77F00;
+}
+
+.signup-link {
+    margin-top: 15px;
+    color: #1f5b09;
+    font-size: 14px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #E9F5DB;
+    color: #1f5b09;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
