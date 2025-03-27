@@ -1,6 +1,19 @@
-# Ignore large files or directories
-/node_modules
-/data/
-/logs/
-*.csv
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+
+# Ignore virtual environment
+venv/
+env/
+.env
+
+# Ignore database and log files
+*.sqlite3
 *.log
+
+# Ignore any large or generated files
+*.csv
+*.json
+.DS_Store
+node_modules/
+.git/
