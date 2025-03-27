@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from models import db  # Import db from models/__init__.py
 from models.models import User  # Import models
+import dotenv
+
 
 from flask_cors import CORS
 
