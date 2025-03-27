@@ -1,0 +1,6 @@
+# Ignore large files or directories
+/node_modules
+/data/
+/logs/
+*.csv
+*.log
